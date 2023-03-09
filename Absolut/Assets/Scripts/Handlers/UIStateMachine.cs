@@ -27,13 +27,33 @@ public class UIStateMachine : Singleton<UIStateMachine>
     [SerializeField]
     private List<UIScreen> screens = new List<UIScreen>();
 
+    [SerializeField, Header("Debugging")]
+    private UIScreen screenSwap;
+
+    [SerializeField]
+    private bool screenOptionOne = true;
+    [SerializeField]
     private UIScreen activeScreen = null;
 
 
+    public bool ScreenOptionOne { get => screenOptionOne; set => screenOptionOne = value; }
+
     private void Start()
     {
-        ChangeCurrentState(UI_States.HomeScreen);
+        if (ScreenOptionOne)
+        {
+            ChangeCurrentState(UI_States.HomeScreen);
+        }
+        else
+        {
+            activeScreen = screenSwap;
+            ChangeCurrentState(UI_States.HomeScreen);
+        }
+
+     
     }
+
+
 
     /// <summary>
     /// Change current state to new UI State
@@ -50,10 +70,23 @@ public class UIStateMachine : Singleton<UIStateMachine>
         switch (state)
         {
             case UI_States.HomeScreen:
-                EnableScreen("HomeScreen");
-                if (activeScreen != null)
+                if (screenOptionOne)
                 {
-                    activeScreen.ActivateScreen();
+                    screenSwap.DeactivateScreen();
+                    EnableScreen("HomeScreen");
+                    if (activeScreen != null)
+                    {
+                        activeScreen.ActivateScreen();
+                    }
+                }
+                else
+                {
+                    ChangeActiveScreen();
+                  
+                    if (activeScreen != null)
+                    {
+                        activeScreen.ActivateScreen();
+                    }
                 }
                 break;
             case UI_States.OurRange:
@@ -106,12 +139,41 @@ public class UIStateMachine : Singleton<UIStateMachine>
                     activeScreen.ActivateScreen();
                 }
                 break;
-            default:
-                break;
+
+
+        }
+    }
+    private void EnableScreen(string screenName)
+    {
+        if(!screenOptionOne) screenSwap.DeactivateScreen();
+        for (int i = 0; i < screens.Count; i++)
+        {
+            if (screens[i].name == screenName)
+            {
+                screens[i].enabled = true;
+                activeScreen = screens[i];
+            }
+            else
+            {
+                screens[i].DeactivateScreen();
+                screens[i].enabled = false;
+            }
 
         }
     }
 
+    public void ChangeActiveScreen()
+    {
+        activeScreen = screenSwap;
+
+        for (int i = 0; i < screens.Count; i++)
+        {
+            screens[i].DeactivateScreen();
+            screens[i].enabled = false;
+        }
+    }
+
+    #region ChangeScreens
     public void ChangeToHomeScreen()
     {
         ChangeCurrentState(UI_States.HomeScreen);
@@ -147,23 +209,5 @@ public class UIStateMachine : Singleton<UIStateMachine>
         ChangeCurrentState(UI_States.QRCode);
     }
 
-    private void EnableScreen(string screenName)
-    {
-        for (int i = 0; i < screens.Count; i++)
-        {
-            if (screens[i].name == screenName)
-            {
-                screens[i].enabled = true;
-                activeScreen = screens[i];
-
-            }
-            else
-            {
-                screens[i].DeactivateScreen();
-                screens[i].enabled = false;
-
-            }
-
-        }
-    }
+    #endregion
 }
