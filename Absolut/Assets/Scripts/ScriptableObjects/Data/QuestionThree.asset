@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fec088a1bccc7440999a521b57e21ed, type: 3}
+  m_Name: QuestionThree
+  m_EditorClassIdentifier: 
+  Prompt: What intrests you the most?
+  ResponseOne: Fashion and shopping.
+  ResponseTwo: Beauty and fitness.
+  ResponseThree: Arts and entertainment.
+  ResponseFour: Books and literature.

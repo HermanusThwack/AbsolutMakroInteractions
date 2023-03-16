@@ -44,7 +44,7 @@ public class HomeScreen : UIScreen
                 selectionButton.onClick.AddListener(UIStateMachine.Instance.ChangeToCocktails);
                 break;
             case HomeScreenOptions.Quiz:
-                TransitionOption("Your Perfect Flavour");
+                TransitionOption("Your out your\nperfect flavour");
                 selectionButton.onClick.RemoveAllListeners();
                 selectionButton.onClick.AddListener(UIStateMachine.Instance.ChangeToQuiz);
                 break;
@@ -59,8 +59,8 @@ public class HomeScreen : UIScreen
 
             if (optionName != null)
             {
-     
-                optionName.text = newOption.ToString();
+
+                optionName.text = newOption;
             }
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIScreen : MonoBehaviour
 {
-    [SerializeField]
+    [Header("Components"),SerializeField]
     protected Animator anim;
 
     [SerializeField]

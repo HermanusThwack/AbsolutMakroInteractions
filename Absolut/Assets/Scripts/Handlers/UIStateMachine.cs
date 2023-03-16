@@ -108,6 +108,10 @@ public class UIStateMachine : Singleton<UIStateMachine>
                 if (activeScreen != null)
                 {
                     activeScreen.ActivateScreen();
+                    if(activeScreen.TryGetComponent<Quiz>(out Quiz quiz))
+                    {
+                        quiz.TakeQuiz();
+                    }
                 }
                 break;
             case UI_States.ProductDescription:
